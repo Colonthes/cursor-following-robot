@@ -1,7 +1,7 @@
-/* Padisar Robot: existing Site Chatbot DOM integration. No requests or audio. */
+/* Cursor Following Robot: existing Site Chatbot DOM integration. No requests or audio. */
 (() => {
   'use strict';
-  if(window.PadisarRobotChat)return;
+  if(window.CursorRobotChat)return;
   const roots=new Set();
   let owner=null,panel=null,observer=null,stopTimer=0,openTimer=0,watchdog=0;
   let waiting=false,activeRow=null,sawStream=false,known=new WeakMap(),userCount=0;
@@ -9,8 +9,8 @@
   const opened=p=>!!p&&!p.hidden&&getComputedStyle(p).display!=='none'&&getComputedStyle(p).visibility!=='hidden';
   function publish(el,active,speaking=false) {
     el.dataset.chatActive=String(active);el.dataset.replyActive=String(active&&speaking);
-    el.querySelector('.padisar-robot__chat')?.setAttribute('aria-expanded',String(active));
-    el.dispatchEvent(new CustomEvent('padisar-robot:state',{detail:{active,speaking:active&&speaking}}));
+    el.querySelector('.cursor-robot__chat')?.setAttribute('aria-expanded',String(active));
+    el.dispatchEvent(new CustomEvent('cursor-robot:state',{detail:{active,speaking:active&&speaking}}));
   }
   function stop() {clearTimeout(stopTimer);clearTimeout(watchdog);if(owner)publish(owner,true,false);}
   function close() {
@@ -64,7 +64,7 @@
     }
   }
   function announce(el,text) {
-    const status=el.querySelector('.padisar-robot__status');if(!status)return;
+    const status=el.querySelector('.cursor-robot__status');if(!status)return;
     status.textContent=text;status.hidden=false;el.dataset.chatError='true';
     setTimeout(()=>{if(el.isConnected){status.hidden=true;delete el.dataset.chatError;}},6000);
   }
@@ -74,7 +74,7 @@
     const nextPanel=query(el.dataset.chatPanel||'.scb-panel');
     if(!launcher||!nextPanel) {
       announce(el,el.dataset.chatUnavailable||'Support chat is not available on this page yet.');
-      el.dispatchEvent(new CustomEvent('padisar-robot:chat-unavailable',{bubbles:true}));
+      el.dispatchEvent(new CustomEvent('cursor-robot:chat-unavailable',{bubbles:true}));
       return false;
     }
     if(owner&&owner!==el)close();
@@ -97,13 +97,13 @@
   }
   function positionFallback(el) {
     if(el.dataset.rendered==='true'&&!matchMedia('(prefers-reduced-motion:reduce)').matches&&matchMedia('(hover:hover) and (pointer:fine)').matches)return;
-    const b=el.querySelector('.padisar-robot__chat');if(!b)return;
+    const b=el.querySelector('.cursor-robot__chat');if(!b)return;
     const w=el.clientWidth,h=el.clientHeight,f=Math.min(w/1000,h/800);
-    Object.assign(b.style,{left:((w-1000*f)/2+395*f)+'px',top:((h-800*f)/2+255*f)+'px',width:(210*f)+'px',height:(212*f)+'px'});
+    Object.assign(b.style,{left:((w-1000*f)/2+419.14*f)+'px',top:((h-800*f)/2+276.977*f)+'px',width:(161.72*f)+'px',height:(184.067*f)+'px'});
   }
   function attach(el) {
     if(roots.has(el))return;roots.add(el);
-    const button=el.querySelector('.padisar-robot__chat');
+    const button=el.querySelector('.cursor-robot__chat');
     if(button)button.addEventListener('click',e=>{
       // Fine-pointer clicks are resolved against the actual 3D surface instead.
       if(e.detail!==0&&el.dataset.rendered==='true'&&matchMedia('(hover:hover) and (pointer:fine)').matches&&!matchMedia('(prefers-reduced-motion:reduce)').matches)return;
@@ -119,9 +119,9 @@
     if(owner&&panel?.contains(e.target)&&e.target.matches('.scb-form')){waiting=true;activeRow=null;sawStream=false;stop();remember();}
   },true);
   // Optional explicit same-document hooks for future chat versions; never window messages.
-  document.addEventListener('padisar-robot:reply-start',()=>{if(owner&&opened(panel))speak();});
-  document.addEventListener('padisar-robot:reply-end',stop);
-  document.addEventListener('padisar-robot:chat-closed',close);
+  document.addEventListener('cursor-robot:reply-start',()=>{if(owner&&opened(panel))speak();});
+  document.addEventListener('cursor-robot:reply-end',stop);
+  document.addEventListener('cursor-robot:chat-closed',close);
   document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});
-  window.PadisarRobotChat={attach,open,close};
+  window.CursorRobotChat={attach,open,close};
 })();

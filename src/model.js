@@ -1,7 +1,5 @@
 import * as THREE from 'three';
-import padisarLogoURL from '../assets/padisar-logo.png';
 
-const clamp = THREE.MathUtils.clamp;
 
 export function makeRobot(accent) {
   const root = new THREE.Group();
@@ -54,45 +52,7 @@ export function makeRobot(accent) {
   const chestGeo = new THREE.LatheGeometry(chestProfile.map(p=>new THREE.Vector2(...p)),48);
   const chestMaterial=shell.clone();
   mesh(torso,chestGeo,chestMaterial,[0,0.02,0],[1,1,0.64]);
-  // Original transparent PNG, including the complete wordmark. Only empty
-  // margins are excluded through UV coordinates; the source file is unmodified.
-  let logoTexture;
-  const brandingReady=new Promise((resolve,reject)=>{
-    logoTexture=new THREE.TextureLoader().load(padisarLogoURL,resolve,undefined,reject);
-  });
-  logoTexture.colorSpace=THREE.SRGBColorSpace;
-  logoTexture.anisotropy=4;
-  logoTexture.offset.set(78/2000,1-1768/2000);
-  logoTexture.repeat.set(1844/2000,1585/2000);
-  const logoWidth=0.61;
-  const logoHeight=logoWidth*1585/1844;
-  const logoCenterY=0.75;
-  const logoGeometry=new THREE.PlaneGeometry(logoWidth,logoHeight,72,64);
-  const positions=logoGeometry.attributes.position;
-  function chestRadius(worldY) {
-    const y=worldY-0.02;
-    for (let i=1;i<chestProfile.length;i++) {
-      const [r0,y0]=chestProfile[i-1], [r1,y1]=chestProfile[i];
-      if (y<=y1) return THREE.MathUtils.lerp(r0,r1,clamp((y-y0)/(y1-y0),0,1));
-    }
-    return 0;
-  }
-  for (let i=0;i<positions.count;i++) {
-    const x=positions.getX(i), y=positions.getY(i)+logoCenterY;
-    const r=chestRadius(y);
-    positions.setXYZ(i,x,y,0.64*Math.sqrt(Math.max(0,r*r-x*x))+0.006);
-  }
-  logoGeometry.computeVertexNormals();
-  const logoFinish=new THREE.MeshPhysicalMaterial({
-    map:logoTexture, color:0xffffff, metalness:0.32, roughness:0.36,
-    clearcoat:0.45, clearcoatRoughness:0.25,
-    emissive:0xffffff, emissiveMap:logoTexture, emissiveIntensity:0.06,
-    transparent:true, alphaTest:0.045, depthWrite:false,
-    polygonOffset:true, polygonOffsetFactor:-1, polygonOffsetUnits:-1,
-  });
-  const chestLogo=mesh(torso,logoGeometry,logoFinish,[0,0,0]);
-  chestLogo.name='Padisar chest emblem';
-  // The vents sit below the complete logo, leaving its lettering unobstructed.
+  // Recessed lower-chest vents leave the upper shell plain.
   for (let i=0;i<3;i++) box(torso,rubber,[0,0.30-i*0.057,0.267-i*0.012],[0.18,0.014,0.016]);
   for (const side of [-1,1]) {
     const seam = mesh(torso,new THREE.CapsuleGeometry(0.008,0.31,3,8),chrome,[side*0.385,0.78,0.28]);
@@ -158,6 +118,6 @@ export function makeRobot(accent) {
   }
   const brows=[];
   for(const side of [-1,1]) {const brow=box(face,glow,[side*0.119,0.555,0.390],[0.075,0.006,0.006]);brow.rotation.z=-side*0.20;brows.push(brow);brow.visible=false;}
-  return {root,upper,torso,head,arms,legs,eyes,mouth,ring,smile,wince,squints,brows,chestMaterial,brandingReady};
+  return {root,upper,torso,head,arms,legs,eyes,mouth,ring,smile,wince,squints,brows,chestMaterial};
 }
 

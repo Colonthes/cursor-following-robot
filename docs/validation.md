@@ -1,48 +1,35 @@
 # Validation
 
-Repository preparation checked on **19 October 2026** against the recovered **v1.4.0** runtime.
-
-## Current checks
+Version **1.5.0**, checked on **19 October 2026**.
 
 | Check | Result | Scope |
 | --- | --- | --- |
-| `npm test` | 6 tests passed | Actual Three.js model and motion; texture loading is stubbed for Node. |
-| Browser smoke checks | 16 scenarios passed | Headless Chromium 153.0.8010.0 with software WebGL; real DOM, rendering, and input. See the recorded results below. |
-| `npm run package` | Passed | Builds the bundle and installable WordPress ZIP. |
-| Rebuild comparison | Exact byte match | Rebuilt bundle matches the original supplied v1.4.0 bundle. |
-| JavaScript syntax | Passed | 7 source/build scripts and 5 embedded standalone-demo scripts. |
-| PHP syntax | Passed | Parsed as PHP 7.4 using php-parser; this is not PHP or WordPress execution. |
-| Plugin ZIP integrity | Passed | 10 entries, one `padisar-robot/` root, all six shared assets match their source files. |
+| `npm test` | 6 tests passed | Actual Three.js geometry and motion, imported directly without texture stubs. |
+| Browser smoke checks | 16 scenarios passed | Headless Chromium 153.0.8010.0 with real DOM/input and software WebGL. |
+| Build and plugin package | Passed | Bundle, self-contained demo, and installable ZIP rebuilt. |
+| PHP syntax | Passed | Parsed as PHP 7.4; live WordPress execution is separate. |
+| Plugin ZIP | Passed | 9 entries under `cursor-robot/`; all five shared assets match source files. |
+| Static image | Passed | Fresh 1000 × 800 RGBA render, transparent outside the model, with a plain chest. |
+| Name and asset review | Passed | Source, filenames, generated HTML, embedded image, and decompressed plugin contents checked. |
 
-The browser checks exercised desktop logo/rendering, pointer tracking, all five body-part targets and recovery, missing-provider feedback, reduced-motion and mobile static fallbacks, no bundle download in static modes, native keyboard chest activation, mobile overflow, local demo reply timing/completion/closing, direct local-file opening, and absence of uncaught JavaScript errors.
+See [browser-check-results.json](browser-check-results.json) for individual browser scenarios. These cover desktop rendering, pointer tracking, all five body-part targets and recovery, missing-chat feedback, touch and reduced-motion fallbacks, no 3D download in those basic-example modes, keyboard activation, mobile overflow, demo reply timing/completion/closing, direct local-file opening, and absence of uncaught JavaScript errors.
 
-See [browser-check-results.json](browser-check-results.json) for the browser version and individual scenario results. The browser smoke checks were run during repository preparation with an isolated QA harness; the six motion tests are included and runnable with `npm test`.
-
-The original 3D source, loader, chat bridge, stylesheet, logo, poster, and rebuilt bundle were preserved. Repository work adds documentation, tests, packaging, and plugin author/project links.
+The browser smoke checks were run with an isolated QA harness. The six motion tests are included and runnable with `npm test`. The standalone demo is generated from `examples/demo.html` and the shared assets by `scripts/build-demo.mjs`.
 
 Bundle SHA-256:
 
 ```text
-7e81d154baedc668d927f9ebcb719bc1d89df37de66c61151efa4396cf20b264
+5363d655198862968bc3add1f4f0d5e69b88e2155d8b0374457e20be59c8bda8
 ```
 
-## Automated repository checks
+## Automated checks
 
-The GitHub Actions workflow installs locked dependencies, runs the six motion tests, rebuilds/packages the project, checks that generated artifacts are current, and runs `php -l` on the plugin. Its badge reports the actual run status; local checks do not imply that GitHub Actions has already passed.
+GitHub Actions installs locked dependencies, runs motion tests, rebuilds and packages the project, checks generated files for differences, and runs PHP syntax validation. The status badge reports its actual outcome.
 
-## Remaining integration checks
+## Integration limits
 
-No live WordPress/Enfold installation or real production-chat conversation was performed during this repository preparation. The browser chat checks use the labelled local sample. Software WebGL does not cover every physical GPU or browser family.
+No live WordPress/Enfold installation or real production-chat conversation was performed for this version. Browser chat checks use the labelled local sample. Software WebGL does not cover every physical GPU or browser family.
 
-Before production use, check a staging page for:
+Before production use, check activation, shortcode rendering, theme styles, cache/optimization settings, the real chat provider's reply/error/closing states, keyboard focus, and mobile/reduced-motion behavior on a staging page.
 
-1. WordPress activation, shortcode rendering, Enfold styling, and cache/optimization behavior.
-2. The real provider's launcher, contact form if any, message markers, streaming, errors, and closing during a reply.
-3. Keyboard focus, touch targets, reduced-motion behavior, and mobile layout in your supported browsers.
-4. Correct logo and poster placement if you replace the supplied branding.
-
-The default chat adapter depends on the observed Site Chatbot DOM structure, rather than a vendor API contract. A provider update or cross-origin iframe can require a custom integration. Repeated mounting/removal in a single-page application also needs explicit loader/chat-observer lifecycle handling.
-
-## Historical validation
-
-The original 15 September 2026 release included **27 simulation checks**. Those records are preserved as [the historical report](archive/VALIDATION-v1.4.0.md) and [its results](archive/validation-results-v1.4.0.json). Their old browser limitation describes that earlier validation session. Those 27 checks were not rerun as part of the current six-test suite and must not be added to the current test count.
+The default reply observer depends on Site Chatbot DOM classes. Other providers, cross-origin iframes, or repeated mounting in a single-page application can require custom integration or lifecycle cleanup.

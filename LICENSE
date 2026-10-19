@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2026 Padisar Robot Starter contributors
+Copyright (c) 2026 Cursor Following Robot contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -19,9 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
-Three.js is distributed under its own MIT notice in THREE-LICENSE.txt.
-
-The user-supplied Padisar logo in assets/padisar-logo.png, and its embedded
-copies in the bundle, poster, and standalone demo, are excluded from this MIT grant. Rights in that artwork
-and associated trademarks remain with their respective owner.

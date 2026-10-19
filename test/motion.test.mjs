@@ -1,29 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdir } from 'node:fs/promises';
-import { fileURLToPath } from 'node:url';
-import { build } from 'esbuild';
 import * as THREE from 'three';
+import { makeRobot } from '../src/model.js';
 import { createMotion } from '../src/motion.js';
 
-// Bundle only the model's PNG import for Node; exercise the actual scene and motion code.
-const output = new URL('../.cache/model-fixture.mjs', import.meta.url);
-await mkdir(new URL('../.cache/', import.meta.url), { recursive: true });
-await build({ entryPoints: [fileURLToPath(new URL('../src/model.js', import.meta.url))],
-  outfile: fileURLToPath(output), bundle: true, platform: 'node', format: 'esm',
-  external: ['three'], loader: { '.png': 'dataurl' } });
-const { makeRobot } = await import(output.href);
-const originalLoad = THREE.TextureLoader.prototype.load;
-
 function fixture() {
-  THREE.TextureLoader.prototype.load = (_url, onLoad) => {
-    const texture = new THREE.Texture();
-    queueMicrotask(() => onLoad?.(texture));
-    return texture;
-  };
-  let robot;
-  try { robot = makeRobot('#06b6d4'); }
-  finally { THREE.TextureLoader.prototype.load = originalLoad; }
+  const robot = makeRobot('#06b6d4');
   return { robot, motion: createMotion(robot, false) };
 }
 

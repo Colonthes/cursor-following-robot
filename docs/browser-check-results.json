@@ -3,7 +3,7 @@
   "browser": "153.0.8010.0",
   "results": [
     {
-      "name": "Desktop WebGL renders the actual model with its logo",
+      "name": "Desktop WebGL renders the actual neutral model with a plain chest",
       "status": "passed"
     },
     {

@@ -16,7 +16,7 @@ On Windows without `python3`, use `py -3 scripts/package-plugin.py` after buildi
 ## Make a change
 
 1. Open an issue for a substantial behavior change, or fork the repository for a focused fix.
-2. Edit the canonical source in `src/`, shared browser files in `assets/`, or PHP in `wordpress/padisar-robot/`.
+2. Edit the canonical source in `src/`, shared browser files in `assets/`, or PHP in `wordpress/cursor-robot/`.
 3. Run the checks above. Commit the updated bundle and plugin ZIP when their inputs change; do not commit `node_modules/` or the copied WordPress asset directory.
 4. Check the standalone demo and, for integration changes, a staging WordPress page. Verify pointer reactions, chest activation, keyboard access, reduced motion, touch fallback, and chat completion/closing.
 5. Submit a pull request explaining the trigger, resulting behavior, and checks actually performed.

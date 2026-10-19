@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Try a cursor-aware 3D robot, local sample chat, and English/Persian installation guides.">
+  <title>Cursor Following Robot — Demo and Setup</title>
+  <link rel="stylesheet" href="../assets/robot.css">
+  <style>
+    :root { color-scheme: light; }
+    * { box-sizing: border-box; }
+    body { margin: 0; color: #142638; background: #f4f6f8; font: 17px/1.6 system-ui,sans-serif; }
+    main { max-width: 1160px; margin: auto; padding: 40px 24px 80px; }
+    .hero { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; }
+    h1 { font-size: clamp(32px,5vw,58px); line-height: 1.1; letter-spacing: -.035em; margin: 16px 0 24px; }
+    h2 { line-height: 1.2; }
+    .eyebrow { color: #0e7490; font-size: 13px; font-weight: 700; letter-spacing: .12em; }
+    a { color: #075985; text-underline-offset: 3px; }
+    a:focus-visible,button:focus-visible,input:focus-visible { outline: 3px solid #0e7490; outline-offset: 4px; }
+    .primary { display: inline-block; padding: 12px 20px; margin-top: 8px; border-radius: 8px; background: #0c4a6e; color: #fff; text-decoration: none; }
+    .note { color: #465b6d; font-size: 15px; }
+    .guides { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding-top: 32px; border-top: 1px solid #cbd5e1; }
+    code { font: 14px/1.6 ui-monospace,monospace; overflow-wrap: anywhere; }
+    .scb-fab { position: fixed; right: 20px; bottom: 18px; z-index: 100; min-height: 48px; padding: 10px 18px; border: 1px solid #0e7490; border-radius: 24px; background: #12394d; color: #fff; font: 600 14px system-ui; cursor: pointer; }
+    .scb-panel { display: none; position: fixed; right: 16px; bottom: 80px; z-index: 100; width: min(370px,calc(100vw - 32px)); max-height: 70vh; overflow: hidden; border: 1px solid #9ab8c4; border-radius: 16px; background: #fff; box-shadow: 0 10px 40px #0003; font: 14px/1.6 system-ui; }
+    .scb-panel.open { display: flex; flex-direction: column; }
+    .scb-head { padding: 10px 16px; background: #e8f5fa; display: flex; align-items: center; justify-content: space-between; }
+    .scb-close { width: 44px; height: 44px; border: 0; background: transparent; font: 24px system-ui; color: #142638; cursor: pointer; }
+    .scb-note { padding: 0 16px; margin: 10px 0; font-size: 12px; color: #465b6d; }
+    .scb-msgs { overflow: auto; min-height: 90px; max-height: 32vh; padding: 12px 16px; display: flex; flex-direction: column; gap: 12px; }
+    .scb-row { max-width: 92%; }
+    .scb-row.user { align-self: flex-end; }
+    .scb-bubble { padding: 9px 12px; border-radius: 12px; background: #eef3f5; white-space: pre-wrap; }
+    .scb-row.user .scb-bubble { background: #d8f1f9; }
+    .scb-form { display: flex; gap: 8px; padding: 12px; border-top: 1px solid #d9e6eb; }
+    .scb-input { width: 100%; min-width: 0; padding: 9px; border: 1px solid #7896a1; border-radius: 8px; font: inherit; }
+    .scb-send { min-height: 44px; padding: 8px 14px; border: 0; border-radius: 8px; background: #12566c; color: #fff; cursor: pointer; }
+    .scb-send:disabled { opacity: .6; cursor: wait; }
+    @media (max-width: 767px) { main { padding: 28px 20px 96px; } .hero,.guides { grid-template-columns: 1fr; gap: 20px; } }
+  </style>
+  <script defer src="../assets/chat-bridge.js"></script>
+  <!-- standalone-bundle -->
+  <script defer src="../assets/loader.js"></script>
+</head>
+<body>
+<main>
+  <section class="hero" data-robot-tracking-area>
+    <div>
+      <div class="eyebrow">INTERACTIVE 3D COMPANION</div>
+      <h1>A little character.<br>A more human interface.</h1>
+      <p>Move your pointer and try the hands, head, and legs. Activate the chest to open the local sample chat, then send a message to see its reply gestures.</p>
+      <a class="primary" href="#setup">Installation guide</a>
+      <p class="note">Built entirely from code, with a plain chest and transparent background. Touch and reduced-motion visitors get a static poster with the same chest action.</p>
+    </div>
+    <div class="cursor-robot" data-cursor-robot data-bundle="../assets/robot.bundle.js"
+         data-accent="#06b6d4" data-tracking="page" data-idle="true"
+         style="--pr-height:600px;--pr-accent:#06b6d4">
+      <div class="cursor-robot__visual" aria-hidden="true">
+        <img class="cursor-robot__poster" src="../assets/robot-poster.png" width="1000" height="800" alt="" decoding="async">
+        <div class="cursor-robot__canvas"></div>
+      </div>
+      <button class="cursor-robot__chat" type="button" aria-haspopup="dialog" aria-expanded="false" aria-label="Open local demonstration chat"></button>
+      <span class="cursor-robot__status" role="status" hidden></span>
+    </div>
+  </section>
+  <section class="guides" id="setup">
+    <article>
+      <h2>WordPress and plain HTML</h2>
+      <p>Download <a href="../downloads/cursor-robot.zip">cursor-robot.zip</a>, upload it in Plugins → Add New Plugin, and activate Cursor Following Robot.</p>
+      <p>Add <code>[cursor_robot height="560" tracking="page"]</code> to a Shortcode block or Enfold Text Block.</p>
+      <p><a href="../docs/wordpress.md">Full WordPress guide</a> · <a href="../README.md">Source and plain HTML setup</a></p>
+      <p class="note">The robot connects to an existing chat provider. This demo supplies local sample replies, with no AI service or voice audio.</p>
+    </article>
+    <article lang="fa" dir="rtl">
+      <h2>راهنمای نصب</h2>
+      <p>بسته <bdi>cursor-robot.zip</bdi> را از بخش افزونه‌ها بارگذاری و فعال کنید. سپس کد زیر را در بلوک کد کوتاه وردپرس یا Text Block انفولد قرار دهید:</p>
+      <p><code dir="ltr">[cursor_robot height="560" tracking="page"]</code></p>
+      <p><a href="../docs/wordpress.fa.md">راهنمای کامل فارسی</a></p>
+      <p class="note">پاسخ‌های این نسخه نمونه و محلی هستند. برای سایت اصلی باید چت‌بات موجود متصل شود. در موبایل یا حالت کاهش حرکت، تصویر ثابت نمایش داده می‌شود.</p>
+    </article>
+  </section>
+</main>
+<button class="scb-fab" type="button" aria-label="Open local demonstration chat">Demo chat</button>
+<section class="scb-panel" role="dialog" aria-label="Local chat demonstration">
+  <div class="scb-head"><strong>Local chat demonstration</strong><button class="scb-close" type="button" aria-label="Close local demonstration chat">×</button></div>
+  <p class="scb-note">Sample replies run on your device. No external support service is contacted.</p>
+  <div class="scb-msgs" aria-live="polite"></div>
+  <form class="scb-form"><input class="scb-input" aria-label="Demo message" placeholder="Type a test message" required autocomplete="off"><button class="scb-send" type="submit">Send</button></form>
+</section>
+<script>
+(() => {
+  const panel=document.querySelector('.scb-panel'),input=panel.querySelector('.scb-input'),messages=panel.querySelector('.scb-msgs'),send=panel.querySelector('.scb-send');
+  document.querySelector('.scb-fab').addEventListener('click',()=>panel.classList.toggle('open'));
+  panel.querySelector('.scb-close').addEventListener('click',()=>panel.classList.remove('open'));
+  function row(kind,text){const el=document.createElement('div');el.className='scb-row '+kind;const bubble=document.createElement('div');bubble.className='scb-bubble';bubble.textContent=text;el.append(bubble);messages.append(el);return el;}
+  panel.querySelector('.scb-form').addEventListener('submit',event=>{
+    event.preventDefault();if(send.disabled||!input.value.trim())return;
+    row('user',input.value.trim());input.value='';send.disabled=true;
+    const answer=row('bot is-streaming',''),bubble=answer.querySelector('.scb-bubble');
+    const indicator=document.createElement('span');indicator.className='scb-typing-indicator';indicator.textContent='Thinking…';bubble.append(indicator);
+    const words='This is a local sample reply. The robot listens while waiting, then moves its mouth and hands as the response appears. Connect your existing chat provider for real conversations.'.split(' ');
+    let i=0;setTimeout(()=>{bubble.textContent='';function next(){bubble.textContent+=(i?' ':'')+words[i++];messages.scrollTop=messages.scrollHeight;if(i<words.length)setTimeout(next,150);else{answer.classList.remove('is-streaming');send.disabled=false;}}next();},1100);
+  });
+})();
+</script>
+</body>
+</html>

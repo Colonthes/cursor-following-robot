@@ -1,14 +1,14 @@
-/* Padisar Robot Starter — lazy, same-origin loading. No third-party requests. */
+/* Cursor Following Robot — lazy, same-origin loading. No third-party requests. */
 (() => {
   'use strict';
-  if (window.__padisarRobotLoader) return;
-  window.__padisarRobotLoader = true;
+  if (window.__cursorRobotLoader) return;
+  window.__cursorRobotLoader = true;
   const bundles = new Map();
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
   const mouse = window.matchMedia('(hover: hover) and (pointer: fine)');
   const eligible = () => !reduce.matches && mouse.matches;
   function bundle(url) {
-    if (window.PadisarRobotStarter) return Promise.resolve();
+    if (window.CursorRobot) return Promise.resolve();
     if (!bundles.has(url)) {
       bundles.set(url, new Promise((resolve, reject) => {
         const script = document.createElement('script');
@@ -22,8 +22,8 @@
     return bundles.get(url);
   }
   function boot() {
-    document.querySelectorAll('[data-padisar-robot]').forEach(el => {
-      window.PadisarRobotChat?.attach(el);
+    document.querySelectorAll('[data-cursor-robot]').forEach(el => {
+      window.CursorRobotChat?.attach(el);
       if (el.dataset.observed) return;
       el.dataset.observed = 'true';
       let near = !('IntersectionObserver' in window);
@@ -33,7 +33,7 @@
         pending = true;
         try {
           await bundle(el.dataset.bundle);
-          if (eligible() && el.isConnected) window.PadisarRobotStarter.init(el);
+          if (eligible() && el.isConnected) window.CursorRobot.init(el);
         } catch (_) {
           el.dataset.status = 'fallback';
         } finally { pending = false; }
@@ -52,5 +52,5 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, {once:true});
   else boot();
   // Explicit hook for a developer inserting content through AJAX after page load.
-  document.addEventListener('padisar-robot:refresh', boot);
+  document.addEventListener('cursor-robot:refresh', boot);
 })();

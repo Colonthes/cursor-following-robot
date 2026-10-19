@@ -7,7 +7,7 @@ function init(el) {
   if(instances.has(el))return instances.get(el);
   const reduce=matchMedia('(prefers-reduced-motion:reduce)'),mouse=matchMedia('(hover:hover) and (pointer:fine)');
   if(reduce.matches||!mouse.matches)return null;
-  const mount=el.querySelector('.padisar-robot__canvas');if(!mount)return null;
+  const mount=el.querySelector('.cursor-robot__canvas');if(!mount)return null;
   const accent=/^#[0-9a-f]{3}([0-9a-f]{3})?$/i.test(el.dataset.accent||'')?el.dataset.accent:'#06b6d4';
   let renderer;
   try{renderer=new THREE.WebGLRenderer({alpha:true,antialias:true,powerPreference:'low-power'});}catch{el.dataset.status='fallback';return null;}
@@ -21,13 +21,13 @@ function init(el) {
   scene.environment=environment.texture;scene.environmentIntensity=0.65;studio.dispose();pmrem.dispose();
   scene.add(new THREE.HemisphereLight(0xcde8ff,0x1a2330,1.2));
   for(const [color,power,pos] of [[0xe9f5ff,2.8,[-3,5,4]],[0x7fd9ff,2.7,[3,2,-2]],[0xffffff,0.9,[2,0,3]]]){const l=new THREE.DirectionalLight(color,power);l.position.set(...pos);scene.add(l);}
-  const robot=makeRobot(accent);scene.add(robot.root);
+  const robot=makeRobot(accent);scene.add(robot.root);el.dataset.modelReady='true';
   const motion=createMotion(robot,el.dataset.idle!=='false');
   const ray=new THREE.Raycaster(),ndc=new THREE.Vector2();
   const zone=el.dataset.tracking==='section'?(el.closest('[data-robot-tracking-area],.avia-section')||el):null;
   let targetX=0,targetY=0,visible=false,disposed=false,contextLost=false,raf=0,last=0,renderCount=0;
   let bounds=el.getBoundingClientRect(),pointerPos=null,hover=null,state={};
-  const cleanups=[],button=el.querySelector('.padisar-robot__chat');
+  const cleanups=[],button=el.querySelector('.cursor-robot__chat');
   const allowed=()=>!reduce.matches&&mouse.matches;
   const chat=()=>el.dataset.chatActive==='true';
   const on=(target,event,fn,options)=>{target.addEventListener(event,fn,options);cleanups.push(()=>target.removeEventListener(event,fn,options));};
@@ -84,24 +84,23 @@ function init(el) {
     if(e.target.closest('a,input,textarea,select')||e.target.closest('button')&&e.target.closest('button')!==button)return;
     bounds=el.getBoundingClientRect();const part=pick(e.clientX,e.clientY);
     if(!part)return;
-    if(part==='torso'){motion.cancel();window.PadisarRobotChat?.open(el);}
+    if(part==='torso'){motion.cancel();window.CursorRobotChat?.open(el);}
     else if(motion.hit(part)){el.dataset.lastHit=part;el.dataset.hitCount=String(Number(el.dataset.hitCount||0)+1);}
   }
   function shouldRun(){return !disposed&&visible&&allowed()&&!document.hidden&&!contextLost;}
   function frame(now){raf=0;if(!el.isConnected){destroy();return;}if(!shouldRun())return;if(!last||now-last>=1000/30){const dt=last?Math.min((now-last)/1000,0.08):1/30;last=now;pose(dt);draw();}raf=requestAnimationFrame(frame);}
   function sync(){if(disposed)return;el.dataset.status=contextLost?'fallback':!allowed()?'static':visible&&!document.hidden?'playing':'suspended';if(shouldRun()){if(!raf){last=0;raf=requestAnimationFrame(frame);}}else{cancelAnimationFrame(raf);raf=0;last=0;}}
-  function destroy(){if(disposed)return;disposed=true;cancelAnimationFrame(raf);cleanups.forEach(fn=>fn());const geos=new Set(),mats=new Set(),textures=new Set();scene.traverse(o=>{if(o.geometry)geos.add(o.geometry);if(o.material)mats.add(o.material);});mats.forEach(m=>{if(m.map)textures.add(m.map);if(m.emissiveMap)textures.add(m.emissiveMap);});geos.forEach(g=>g.dispose());mats.forEach(m=>m.dispose());textures.forEach(t=>t.dispose());environment.dispose();renderer.dispose();renderer.domElement.remove();delete el.dataset.initialized;delete el.dataset.rendered;delete el.dataset.logoReady;instances.delete(el);}
-  robot.brandingReady.then(()=>{if(disposed)return;el.dataset.logoReady='true';if(allowed()&&visible&&!contextLost)draw();}).catch(()=>{if(!disposed)el.dataset.logoReady='false';});
+  function destroy(){if(disposed)return;disposed=true;cancelAnimationFrame(raf);cleanups.forEach(fn=>fn());const geos=new Set(),mats=new Set(),textures=new Set();scene.traverse(o=>{if(o.geometry)geos.add(o.geometry);if(o.material)mats.add(o.material);});mats.forEach(m=>{if(m.map)textures.add(m.map);if(m.emissiveMap)textures.add(m.emissiveMap);});geos.forEach(g=>g.dispose());mats.forEach(m=>m.dispose());textures.forEach(t=>t.dispose());environment.dispose();renderer.dispose();renderer.domElement.remove();delete el.dataset.initialized;delete el.dataset.rendered;delete el.dataset.modelReady;instances.delete(el);}
   on(document,'pointermove',pointer,{passive:true});on(el,'click',click);
   on(document.documentElement,'pointerleave',center);on(window,'blur',center);
   on(window,'scroll',()=>{bounds=el.getBoundingClientRect();center();},{passive:true,capture:true});
   on(document,'visibilitychange',sync);on(reduce,'change',()=>{center();motion.cancel();sync();});on(mouse,'change',()=>{center();motion.cancel();sync();});
   let previouslyChatting=chat();
-  on(el,'padisar-robot:state',()=>{if(chat()&&!previouslyChatting)motion.cancel();previouslyChatting=chat();sync();});
+  on(el,'cursor-robot:state',()=>{if(chat()&&!previouslyChatting)motion.cancel();previouslyChatting=chat();sync();});
   on(renderer.domElement,'webglcontextlost',e=>{e.preventDefault();contextLost=true;delete el.dataset.rendered;sync();});
   on(renderer.domElement,'webglcontextrestored',()=>{contextLost=false;resize();sync();});
   if('ResizeObserver'in window){const ro=new ResizeObserver(resize);ro.observe(el);cleanups.push(()=>ro.disconnect());}else on(window,'resize',resize);
   if('IntersectionObserver'in window){const io=new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;sync();},{threshold:0});io.observe(el);cleanups.push(()=>io.disconnect());}else visible=true;
   pose(0);resize();sync();const api={destroy,getState:()=>({...state,targetX,targetY,renderCount,visible,status:el.dataset.status})};instances.set(el,api);return api;
 }
-window.PadisarRobotStarter={init};
+window.CursorRobot={init};

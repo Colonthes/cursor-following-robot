@@ -1,12 +1,9 @@
 # Third-party notices
 
-| Component | License / ownership | Location |
+| Component | License | Location |
 | --- | --- | --- |
-| Custom robot code and documentation | MIT; original contributor notice retained | `LICENSE` |
+| Custom robot code and documentation | MIT | `LICENSE` |
 | Three.js 0.186.0 | MIT | `THREE-LICENSE.txt`; included in the browser bundle |
 | esbuild 0.28.2 | MIT; development/build dependency | `package-lock.json`, installed dependency notice |
-| Padisar logo and branding | Rights remain with the respective owner; excluded from the MIT code grant | `assets/padisar-logo.png`, poster, embedded bundle/demo copies |
 
-The 3D character is constructed procedurally in `src/model.js`. No externally hosted model or runtime CDN is required.
-
-Redistributing the code under MIT does not grant permission to use Padisar's trademarks or artwork. Replace the logo, branded poster, and embedded demo assets when adapting the project for an unrelated site.
+The 3D character is constructed entirely in `src/model.js`. Its static poster is rendered from the same model. No logo artwork, external model file, runtime CDN, or third-party texture asset is required.

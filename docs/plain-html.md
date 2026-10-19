@@ -31,13 +31,13 @@ The included reply observer expects Site Chatbot message classes. See [the WordP
 After inserting the complete component markup:
 
 ```js
-document.dispatchEvent(new CustomEvent('padisar-robot:refresh'));
+document.dispatchEvent(new CustomEvent('cursor-robot:refresh'));
 ```
 
-The loader skips already-observed elements. It exposes `window.PadisarRobotStarter.init(element)` after the bundle loads; this returns the instance's `getState()` and `destroy()` methods. The runtime releases its rendering resources when a running component is removed. The loader/chat bridge are designed primarily for static WordPress pages; a single-page application that repeatedly mounts and removes components should add lifecycle cleanup for their observers and listeners.
+The loader skips already-observed elements. It exposes `window.CursorRobot.init(element)` after the bundle loads; this returns the instance's `getState()` and `destroy()` methods. The runtime releases its rendering resources when a running component is removed. The loader/chat bridge are designed primarily for static WordPress pages; a single-page application that repeatedly mounts and removes components should add lifecycle cleanup for their observers and listeners.
 
-## Branding
+## Customizing the character
 
-The live model imports `assets/padisar-logo.png`; the static poster contains branding too. Replace **both** before using another brand. The original logo UV crop in `src/model.js` is tailored to a 2000 × 2000 source image; adjust its offset/repeat and logo dimensions for your artwork. Rebuild the bundle after model changes and create a matching transparent poster.
+The model has a plain chest and does not load any logo or external texture. Edit `src/model.js` to customize geometry or materials, then rebuild the bundle. The supplied static poster is a transparent 1000 × 800 rendering of the same character.
 
-The poster's fallback chest hit area assumes a 1000 × 800 composition. If you redesign it, update `positionFallback()` in `assets/chat-bridge.js` as well.
+If you change the model composition, render a matching poster and update the fallback chest rectangle in `positionFallback()` in `assets/chat-bridge.js` so keyboard and touch activation remain aligned.

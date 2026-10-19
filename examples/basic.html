@@ -22,20 +22,20 @@
     <p class="example-note">Move your pointer around the page and try the robot's hands, head, and legs. This minimal example does not install a chat widget. For the local sample chat, open the <a href="../docs/demo-and-guide.html">bilingual demo and guide</a>.</p>
 
     <!-- Copy this component plus the stylesheet and two deferred scripts to your own page. -->
-    <div class="padisar-robot" data-padisar-robot
+    <div class="cursor-robot" data-cursor-robot
          data-bundle="../assets/robot.bundle.js"
          data-accent="#06b6d4" data-tracking="page" data-idle="true"
          data-chat-selector=".scb-fab" data-chat-panel=".scb-panel"
          data-chat-unavailable="This example has no chat provider. Open the bilingual demo for local sample replies."
          style="--pr-height:560px;--pr-accent:#06b6d4">
-      <div class="padisar-robot__visual" aria-hidden="true">
-        <img class="padisar-robot__poster" src="../assets/robot-poster.webp"
+      <div class="cursor-robot__visual" aria-hidden="true">
+        <img class="cursor-robot__poster" src="../assets/robot-poster.png"
              width="1000" height="800" alt="" decoding="async">
-        <div class="padisar-robot__canvas"></div>
+        <div class="cursor-robot__canvas"></div>
       </div>
-      <button class="padisar-robot__chat" type="button"
+      <button class="cursor-robot__chat" type="button"
               aria-haspopup="dialog" aria-expanded="false" aria-label="Open support chat"></button>
-      <span class="padisar-robot__status" role="status" hidden></span>
+      <span class="cursor-robot__status" role="status" hidden></span>
     </div>
 
     <p class="example-note">Touch and reduced-motion users receive a static poster with the same chest action. <a href="../README.md">Project documentation</a>.</p>

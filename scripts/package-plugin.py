@@ -5,28 +5,28 @@ import shutil
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
-PLUGIN = ROOT / "wordpress" / "padisar-robot"
+PLUGIN = ROOT / "wordpress" / "cursor-robot"
 ASSETS = ["robot.bundle.js", "loader.js", "chat-bridge.js", "robot.css",
-          "padisar-logo.png", "robot-poster.webp"]
+          "robot-poster.png"]
 
 def package():
     version = json.loads((ROOT / "package.json").read_text())["version"]
-    php = (PLUGIN / "padisar-robot.php").read_text()
+    php = (PLUGIN / "cursor-robot.php").read_text()
     if f"Version: {version}" not in php:
         raise SystemExit("Plugin and package versions differ")
     (PLUGIN / "assets").mkdir(exist_ok=True)
     for name in ASSETS:
         shutil.copyfile(ROOT / "assets" / name, PLUGIN / "assets" / name)
-    files = {"padisar-robot.php": PLUGIN / "padisar-robot.php",
+    files = {"cursor-robot.php": PLUGIN / "cursor-robot.php",
              "readme.txt": PLUGIN / "readme.txt",
              "LICENSE.txt": ROOT / "LICENSE",
              "THREE-LICENSE.txt": ROOT / "THREE-LICENSE.txt"}
     files.update({"assets/" + name: ROOT / "assets" / name for name in ASSETS})
-    destination = ROOT / "downloads" / "padisar-robot.zip"
+    destination = ROOT / "downloads" / "cursor-robot.zip"
     destination.parent.mkdir(exist_ok=True)
     with zipfile.ZipFile(destination, "w", zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
         for name, source in sorted(files.items()):
-            info = zipfile.ZipInfo("padisar-robot/" + name, date_time=(2026, 9, 15, 0, 0, 0))
+            info = zipfile.ZipInfo("cursor-robot/" + name, date_time=(2026, 10, 19, 0, 0, 0))
             info.compress_type = zipfile.ZIP_DEFLATED
             info.external_attr = 0o100644 << 16
             archive.writestr(info, source.read_bytes(), compress_type=zipfile.ZIP_DEFLATED, compresslevel=9)

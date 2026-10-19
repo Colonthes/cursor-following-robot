@@ -1,7 +1,7 @@
 node_modules/
 .cache/
 coverage/
-wordpress/padisar-robot/assets/
+wordpress/cursor-robot/assets/
 .DS_Store
 Thumbs.db
 *.log
