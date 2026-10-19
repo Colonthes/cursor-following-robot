@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Cursor Following Robot — minimal integration</title>
+  <link rel="stylesheet" href="../assets/robot.css">
+  <style>
+    body { margin: 0; background: #f4f6f8; color: #142638; font: 17px/1.6 system-ui, sans-serif; }
+    main { max-width: 860px; margin: 0 auto; padding: 32px 20px; }
+    h1 { font-size: clamp(28px, 5vw, 44px); line-height: 1.15; margin-bottom: 16px; }
+    a { color: #075985; }
+    a:focus-visible { outline: 3px solid #0e7490; outline-offset: 4px; }
+    .example-note { max-width: 660px; }
+  </style>
+  <script defer src="../assets/chat-bridge.js"></script>
+  <script defer src="../assets/loader.js"></script>
+</head>
+<body>
+  <main>
+    <h1>Cursor Following Robot</h1>
+    <p class="example-note">Move your pointer around the page and try the robot's hands, head, and legs. This minimal example does not install a chat widget. For the local sample chat, open the <a href="../docs/demo-and-guide.html">bilingual demo and guide</a>.</p>
+
+    <!-- Copy this component plus the stylesheet and two deferred scripts to your own page. -->
+    <div class="padisar-robot" data-padisar-robot
+         data-bundle="../assets/robot.bundle.js"
+         data-accent="#06b6d4" data-tracking="page" data-idle="true"
+         data-chat-selector=".scb-fab" data-chat-panel=".scb-panel"
+         data-chat-unavailable="This example has no chat provider. Open the bilingual demo for local sample replies."
+         style="--pr-height:560px;--pr-accent:#06b6d4">
+      <div class="padisar-robot__visual" aria-hidden="true">
+        <img class="padisar-robot__poster" src="../assets/robot-poster.webp"
+             width="1000" height="800" alt="" decoding="async">
+        <div class="padisar-robot__canvas"></div>
+      </div>
+      <button class="padisar-robot__chat" type="button"
+              aria-haspopup="dialog" aria-expanded="false" aria-label="Open support chat"></button>
+      <span class="padisar-robot__status" role="status" hidden></span>
+    </div>
+
+    <p class="example-note">Touch and reduced-motion users receive a static poster with the same chest action. <a href="../README.md">Project documentation</a>.</p>
+  </main>
+</body>
+</html>

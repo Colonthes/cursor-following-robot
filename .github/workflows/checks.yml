@@ -1,0 +1,36 @@
+name: Checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Test actual model and motion
+        run: npm test
+      - name: Build and package
+        run: npm run package
+      - name: Check generated files are current
+        run: git diff --exit-code -- assets/robot.bundle.js downloads/padisar-robot.zip
+      - name: Check plugin PHP syntax
+        run: php -l wordpress/padisar-robot/padisar-robot.php
+      - name: Upload installable plugin
+        uses: actions/upload-artifact@v4
+        with:
+          name: padisar-robot-wordpress
+          path: downloads/padisar-robot.zip

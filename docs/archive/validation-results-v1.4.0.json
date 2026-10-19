@@ -1,0 +1,165 @@
+{
+  "release": "1.4.0",
+  "checked_on": "2026-09-15",
+  "automated_behavior_checks_passed": 27,
+  "groups": [
+    {
+      "group": "motion",
+      "method": "Actual Three.js geometry and animation math, with texture loading stubbed",
+      "checks": [
+        {
+          "name": "Normal cursor tracking leaves the mouth hidden",
+          "status": "passed"
+        },
+        {
+          "name": "All five hurt targets react, reject overlapping hits, and recover",
+          "status": "passed"
+        },
+        {
+          "name": "Torso and unassigned arms cannot trigger hurt reactions",
+          "status": "passed"
+        },
+        {
+          "name": "Both rubbing gestures bring the hands together in front of the chest",
+          "status": "passed"
+        },
+        {
+          "name": "Pointer proximity moves a hand less than 0.012 model units",
+          "status": "passed"
+        },
+        {
+          "name": "Torso chat mode holds the head steady and the mouth closed while waiting",
+          "status": "passed"
+        },
+        {
+          "name": "Reply mode animates the mouth and explanatory hand gestures",
+          "status": "passed"
+        },
+        {
+          "name": "Talking requires torso chat activation, even if a reply flag remains set",
+          "status": "passed"
+        },
+        {
+          "name": "Raycasting selects the correct torso, head, hands and legs",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "group": "chat",
+      "method": "Linkedom DOM and MutationObserver simulation with controlled timers",
+      "checks": [
+        {
+          "name": "The corner launcher does not activate robot talking",
+          "status": "passed"
+        },
+        {
+          "name": "Torso opens the existing panel without replaying chat history",
+          "status": "passed"
+        },
+        {
+          "name": "Clicking the torso again leaves an open chat open",
+          "status": "passed"
+        },
+        {
+          "name": "User messages and thinking indicators keep the mouth quiet",
+          "status": "passed"
+        },
+        {
+          "name": "Assistant response text starts the talking animation",
+          "status": "passed"
+        },
+        {
+          "name": "Streaming completion stops talking",
+          "status": "passed"
+        },
+        {
+          "name": "Whole replies trigger a bounded reading gesture",
+          "status": "passed"
+        },
+        {
+          "name": "Chat errors do not trigger speaking",
+          "status": "passed"
+        },
+        {
+          "name": "Closing chat stops the robot and ignores late reply tokens",
+          "status": "passed"
+        },
+        {
+          "name": "Reply events cannot activate talking before a torso click",
+          "status": "passed"
+        },
+        {
+          "name": "A stalled response cannot leave the mouth moving indefinitely",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "group": "runtime",
+      "method": "Actual runtime logic in Linkedom, with WebGLRenderer and PMREMGenerator stubs; no GPU/browser rendering",
+      "checks": [
+        {
+          "name": "Runtime initializes a single canvas with the logo and torso control",
+          "status": "passed"
+        },
+        {
+          "name": "Pointer events reach the actual runtime tracking logic",
+          "status": "passed"
+        },
+        {
+          "name": "A hand click reaches the hurt animation through runtime picking",
+          "status": "passed"
+        },
+        {
+          "name": "A torso click cancels hurt, opens existing chat, and holds the listening pose",
+          "status": "passed"
+        },
+        {
+          "name": "The fallback/native torso action does not toggle an already-open chat closed",
+          "status": "passed"
+        },
+        {
+          "name": "Reduced motion suspends rendering and aligns the torso control with the poster",
+          "status": "passed"
+        },
+        {
+          "name": "Destroy releases the canvas and initialization state",
+          "status": "passed"
+        }
+      ]
+    }
+  ],
+  "additional_checks": {
+    "php_parser": "PHP 7.4 syntax parsed; no PHP execution",
+    "javascript": "Three plugin scripts and five standalone inline scripts parse",
+    "guide": "English and RTL Persian guide containers exist; no remote asset dependencies or removed control markup",
+    "poster": {
+      "size": [
+        1000,
+        800
+      ],
+      "alpha_min_max": [
+        0,
+        255
+      ]
+    },
+    "pose_review": "Six CPU-rasterized views of actual scene geometry: neutral, both hand rubs, head rub, leg flinch, talking; simplified lighting",
+    "logo_sha256": "31bfa07892284813e83a01250b40cfcdcd4942d4df1032462c47ef7be1858a90"
+  },
+  "site_observation": {
+    "url": "https://padisarco.ir/",
+    "date": "2026-09-15",
+    "chat_asset": "/wp-content/plugins/site-chatbot/assets/widget.js?ver=4.6.9",
+    "launcher": ".scb-fab",
+    "panel": ".scb-panel",
+    "method": "Read-only browser DOM and stylesheet inspection. No contact form submitted and no support messages sent."
+  },
+  "limitations": [
+    "No actual browser rendering or interaction pass for v1.4.0; local-file preview was blocked by browser URL policy.",
+    "No installation or real chatbot conversation tested in WordPress/Enfold for this release.",
+    "Chat synchronization uses observed DOM classes; future widget markup changes require adapter updates.",
+    "Offline pose renders are a geometry review, not final WebGL lighting verification.",
+    "Touch and reduced-motion users receive a static poster with an accessible torso chat button, without hurt/talking animation."
+  ]
+}

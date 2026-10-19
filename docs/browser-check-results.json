@@ -1,0 +1,71 @@
+{
+  "date": "2026-10-19",
+  "browser": "153.0.8010.0",
+  "results": [
+    {
+      "name": "Desktop WebGL renders the actual model with its logo",
+      "status": "passed"
+    },
+    {
+      "name": "Pointer movement reaches the rendered robot tracking logic",
+      "status": "passed"
+    },
+    {
+      "name": "Rendered picking and recovery: hand-left",
+      "status": "passed"
+    },
+    {
+      "name": "Rendered picking and recovery: hand-right",
+      "status": "passed"
+    },
+    {
+      "name": "Rendered picking and recovery: head",
+      "status": "passed"
+    },
+    {
+      "name": "Rendered picking and recovery: leg-left",
+      "status": "passed"
+    },
+    {
+      "name": "Rendered picking and recovery: leg-right",
+      "status": "passed"
+    },
+    {
+      "name": "Missing chat provider produces the availability status",
+      "status": "passed"
+    },
+    {
+      "name": "Reduced motion: poster, no 3D download, keyboard chest action, and no overflow",
+      "status": "passed"
+    },
+    {
+      "name": "Mobile touch: poster, no 3D download, keyboard chest action, and no overflow",
+      "status": "passed"
+    },
+    {
+      "name": "Standalone demo: keyboard chest activation opens the local chat",
+      "status": "passed"
+    },
+    {
+      "name": "Standalone demo: waiting stays quiet and assistant text starts reply gestures",
+      "status": "passed"
+    },
+    {
+      "name": "Standalone demo: streaming completion stops reply gestures",
+      "status": "passed"
+    },
+    {
+      "name": "Standalone demo: closing chat returns to pointer mode",
+      "status": "passed"
+    },
+    {
+      "name": "Standalone demo also renders when opened directly as a local HTML file",
+      "status": "passed"
+    },
+    {
+      "name": "No uncaught JavaScript errors across the browser scenarios",
+      "status": "passed"
+    }
+  ],
+  "errors": []
+}

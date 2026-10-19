@@ -1,0 +1,29 @@
+name: Bug report
+description: Report a reproducible robot or integration problem.
+title: "[Bug]: "
+body:
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Browser, OS, project version, and WordPress/theme versions if relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: Include shortcode attributes or a minimal HTML example. Remove private data.
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Expected and actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Relevant logs or screenshots
+      description: Do not include credentials, customer messages, or personal information.

@@ -1,0 +1,28 @@
+{
+  "name": "cursor-following-robot",
+  "version": "1.4.0",
+  "private": true,
+  "description": "An interactive Three.js website robot with a standalone demo and a ready-to-install WordPress plugin.",
+  "type": "module",
+  "author": "Colonthes",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Colonthes/cursor-following-robot.git"
+  },
+  "homepage": "https://github.com/Colonthes/cursor-following-robot#readme",
+  "bugs": "https://github.com/Colonthes/cursor-following-robot/issues",
+  "keywords": ["threejs", "wordpress", "enfold", "robot", "cursor-tracking", "webgl"],
+  "engines": { "node": ">=22" },
+  "license": "MIT",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node --test test/motion.test.mjs",
+    "package": "npm run build && python3 scripts/package-plugin.py"
+  },
+  "dependencies": {
+    "three": "0.186.0"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
+  }
+}
